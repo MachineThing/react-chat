@@ -9,22 +9,14 @@ class ChatApp extends React.Component {
     this.ws = new WebSocket(`ws://${window.location.hostname}:3500`);
   }
 
-  handleChat = () => {
-
-  }
-
   handleInput = text => {
     this.ws.send(text);
-  }
-
-  keyPress = event => {
-
   }
 
   render() {
     return(
       <>
-      <Chat handler={this.handleChat} />
+      <Chat handler={this.ws} />
       <Input handler={this.handleInput} />
       </>
     );

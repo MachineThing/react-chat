@@ -2,11 +2,16 @@ import asyncio
 import websockets
 from traceback import print_exception
 
+connections = []
+
 # Daemon
 async def daemon(sock):
-    async for data in sock:
+    connections.append(sock)
+    while True:
+        data = await sock.recv()
         print(data)
-        #await sock.send(data)
+        for connection in connections:
+            await connection.send(data)
 
 # Socket server
 HOST = '0.0.0.0'
