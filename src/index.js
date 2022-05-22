@@ -4,13 +4,30 @@ import Input from './input.js'
 import Chat from './chat.js'
 
 class ChatApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.ws = new WebSocket(`ws://${window.location.hostname}:3500`);
+  }
+
+  handleChat = () => {
+
+  }
+
+  handleInput = text => {
+    this.ws.send(text);
+  }
+
+  keyPress = event => {
+
+  }
+
   render() {
     return(
       <>
-      <Chat />
-      <Input />
+      <Chat handler={this.handleChat} />
+      <Input handler={this.handleInput} />
       </>
-    )
+    );
   }
 }
 

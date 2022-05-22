@@ -1,10 +1,12 @@
 import asyncio
 import websockets
+from traceback import print_exception
 
 # Daemon
 async def daemon(sock):
     async for data in sock:
         print(data)
+        #await sock.send(data)
 
 # Socket server
 HOST = '0.0.0.0'
@@ -17,5 +19,10 @@ async def main():
         await asyncio.Future()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        pass
+    except BaseException as err:
+        print_exception(err)
     print("Bye")
