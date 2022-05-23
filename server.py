@@ -1,17 +1,27 @@
-import asyncio
-import websockets
 from traceback import print_exception
+import asyncio
+import copy
+import websockets
 
 connections = []
 
 # Daemon
 async def daemon(sock):
+    print(f"\"{sock.remote_address[0]}\" connected.")
     connections.append(sock)
-    while True:
-        data = await sock.recv()
-        print(data)
-        for connection in connections:
-            await connection.send(data)
+    try:
+        while True:
+            data = await sock.recv()
+            print(f"\"{sock.remote_address[0]}\": \"{data}\"")
+            for sockc in connections:
+                if sockc.closed != True:
+                    await sockc.send(data)
+    except websockets.exceptions.ConnectionClosedOK:
+        pass
+    except BaseException as err:
+        print_exception(err)
+    print(f"\"{sock.remote_address[0]}\" closed.")
+    connections.remove(sock)
 
 # Socket server
 HOST = '0.0.0.0'
