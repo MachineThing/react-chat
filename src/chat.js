@@ -25,17 +25,21 @@ export default class Chat extends React.Component {
     };
     this.state.chats.push({nickname:"Bot", msg:"Chats go here!"});
 
-    this.props.handler.onmessage = function (event) {
-      console.log(event.data);
-    }
+    this.props.handler.onmessage = this.onMsg;
+  }
+
+  onMsg = event => {
+    const { chats } = this.state;
+    chats.push(JSON.parse(event.data));
+    this.setState({ chats });
   }
 
   render() {
     return(
       <div>
-        {this.state.chats.map(function(item) {
+        {this.state.chats.map(function(item, index) {
           return(
-            <Message nickname={item.nickname} msg={item.msg} key={item}/>
+            <Message nickname={item.nickname} msg={item.msg} key={index}/>
           )
         })}
       </div>

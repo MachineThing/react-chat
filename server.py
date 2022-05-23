@@ -1,6 +1,6 @@
 from traceback import print_exception
 import asyncio
-import copy
+import json
 import websockets
 
 connections = []
@@ -15,7 +15,12 @@ async def daemon(sock):
             print(f"\"{sock.remote_address[0]}\": \"{data}\"")
             for sockc in connections:
                 if sockc.closed != True:
-                    await sockc.send(data)
+                    await sockc.send(json.dumps(
+                        {
+                            "nickname": sock.remote_address[0],
+                            "msg": data
+                        }
+                    ))
     except websockets.exceptions.ConnectionClosedOK:
         pass
     except BaseException as err:
