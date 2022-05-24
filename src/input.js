@@ -12,7 +12,9 @@ export default class Input extends React.Component {
 
   render() {
     return(
-      <input onKeyDown={this.onPress} />
+      <div class="input">
+        <input onKeyDown={this.onPress} />
+      </div>
     )
   }
 }

@@ -23,7 +23,7 @@ export default class Chat extends React.Component {
     this.state = {
       chats: []
     };
-    this.state.chats.push({nickname:"Bot", msg:"Chats go here!"});
+    //this.state.chats.push({nickname:"Bot", msg:"Chats go here!"});
 
     this.props.handler.onmessage = this.onMsg;
   }
@@ -36,7 +36,7 @@ export default class Chat extends React.Component {
 
   render() {
     return(
-      <div>
+      <div class="chat">
         {this.state.chats.map(function(item, index) {
           return(
             <Message nickname={item.nickname} msg={item.msg} key={index}/>

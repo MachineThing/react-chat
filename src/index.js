@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Input from './input.js'
-import Chat from './chat.js'
+import Input from './input.js';
+import Chat from './chat.js';
+import './less/index.css';
 
 class ChatApp extends React.Component {
   constructor(props) {
